@@ -1,0 +1,111 @@
+/* =========================================================
+   /contact — dark page, same tokens as the portfolio (style.css)
+   ========================================================= */
+.contact-page {
+  --c-bg: #0a0909;
+  --c-text: #ece8dd;
+  --c-dim: #a59e97;     /* 7.4:1 on --c-bg */
+  --c-line: rgba(206, 179, 166, 0.22);
+  background: var(--c-bg);
+  color: var(--c-text);
+  min-height: 100svh;
+}
+.contact-page ::selection { background: var(--sand); color: var(--ink); }
+.contact-page .grain { opacity: 0.06; }
+
+/* page-enter wipe */
+.c-wipe { position: fixed; inset: 0; z-index: 140; background: var(--sand); transform-origin: 50% 0; pointer-events: none; }
+
+.c-top { position: fixed; inset: 0 0 auto; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.3rem var(--pad); background: linear-gradient(var(--c-bg) 40%, rgba(10, 9, 9, 0)); }
+.c-top__mark { display: inline-flex; align-items: center; gap: 0.65rem; font-family: 'Sora', var(--body); font-weight: 600; font-size: 1.05rem; letter-spacing: -0.02em; }
+/* the dark tile gets a hairline so it doesn't vanish into the dark page */
+.c-top__logo { width: 2.35rem; height: 2.35rem; border-radius: 10px; box-shadow: 0 0 0 1px rgba(206, 179, 166, 0.35); transition: transform .5s var(--ease-out); }
+.c-top__mark:hover .c-top__logo { transform: rotate(-8deg) scale(1.05); }
+.c-top__nav { display: flex; gap: clamp(1rem, 3vw, 2.4rem); font-size: 0.95rem; }
+.c-top__nav a { color: var(--c-dim); transition: color .25s; position: relative; }
+.c-top__nav a:hover, .c-top__nav a[aria-current='page'] { color: var(--c-text); }
+.c-top__nav a[aria-current='page'] { font-weight: 600; }
+.c-top__nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1px; background: var(--sand); transform: scaleX(0); transform-origin: left; transition: transform .4s var(--ease-out); }
+.c-top__nav a:hover::after, .c-top__nav a[aria-current='page']::after { transform: scaleX(1); }
+
+.c-main { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; min-height: 100svh; padding: 6.5rem var(--pad) 3rem; max-width: 1500px; margin: 0 auto; }
+
+.c-mail { display: inline-block; font-size: clamp(1.2rem, 2.2vw, 1.9rem); color: var(--c-dim); letter-spacing: -0.01em; transition: color .3s; }
+.c-mail:hover { color: var(--sand); }
+.c-title { margin-top: 0.8rem; font-family: var(--display); font-weight: 600; font-size: clamp(2.4rem, 4.6vw, 4.6rem); line-height: 1.02; letter-spacing: -0.035em; }
+.c-line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.c-line > span { display: inline-block; }
+.c-accent { color: var(--sand); }
+.c-lede { margin-top: 1.6rem; max-width: 36rem; color: var(--c-dim); font-size: 1.05rem; }
+
+/* form: underline fields like the reference, with an animated focus line */
+.c-form { margin-top: clamp(2rem, 5vh, 3rem); display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 2.2rem; max-width: 46rem; }
+.c-field { position: relative; display: grid; gap: 0.9rem; }
+.c-field--wide { grid-column: 1 / -1; }
+.c-field label { display: flex; align-items: center; gap: 0.7rem; font-size: 1rem; color: var(--c-text); }
+.c-field label svg { width: 18px; height: 18px; fill: none; stroke: var(--sand); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.c-field input, .c-field textarea {
+  width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--c-line); color: var(--c-text);
+  font: inherit; font-size: 1rem; padding: 0.4rem 0 0.9rem; outline: none; resize: vertical; border-radius: 0;
+}
+.c-field textarea { min-height: 7.5rem; }
+.c-field input::placeholder, .c-field textarea::placeholder { color: rgba(165, 158, 151, 0.6); }
+.c-line-fx { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, var(--sand), var(--clay)); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease-out); }
+.c-field:focus-within .c-line-fx { transform: scaleX(1); }
+.c-field.is-bad .c-line-fx { transform: scaleX(1); background: #e2574c; }
+.c-field.is-bad label { color: #f08a80; }
+.c-field input:focus-visible, .c-field textarea:focus-visible { outline: none; }
+
+.c-actions { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.4rem; }
+.c-send {
+  position: relative; display: inline-flex; align-items: center; gap: 0.7rem; height: 58px; padding: 0 1.8rem; border-radius: 999px;
+  background: var(--c-text); color: var(--ink); font-weight: 500; font-size: 1.05rem; overflow: hidden; isolation: isolate;
+  transition: transform .3s var(--ease-out);
+}
+.c-send::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--sand); transform: translateY(101%); transition: transform .5s var(--ease-out); border-radius: inherit; }
+.c-send:hover::before { transform: translateY(0); }
+.c-send:active { transform: translateY(1px); }
+.c-send svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linejoin: round; transition: transform .5s var(--ease-out); }
+.c-send:hover svg { transform: translate(3px, -3px) rotate(-8deg); }
+.c-send.is-sent svg { animation: fly .9s var(--ease-out) forwards; }
+@keyframes fly { 50% { transform: translate(40px, -30px) rotate(-20deg); opacity: 0; } 51% { transform: translate(-30px, 20px); opacity: 0; } 100% { transform: none; opacity: 1; } }
+.c-status { color: var(--c-dim); font-size: 0.85rem; max-width: 26ch; }
+.c-status.is-ok { color: var(--sand); }
+
+.c-socials { margin-top: 2.2rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.c-socials a { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.6rem 1rem; border-radius: 999px; border: 1px solid var(--c-line); font-size: 0.9rem; transition: border-color .25s, background .25s; }
+.c-socials a:hover { border-color: var(--sand); background: rgba(206, 179, 166, 0.08); }
+.c-socials img { width: 18px; height: 18px; }
+.c-invert { filter: invert(1); }
+
+/* right: dotted globe */
+.c-right { text-align: center; display: grid; justify-items: center; }
+.c-gtitle { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 2.8vw, 2.6rem); letter-spacing: -0.03em; }
+.c-gtext { margin-top: 0.8rem; max-width: 34rem; color: var(--c-dim); }
+.c-globe { position: relative; width: min(100%, 560px); aspect-ratio: 1; margin-top: 1.5rem; cursor: grab; touch-action: pan-y; }
+.c-globe:active { cursor: grabbing; }
+.c-globe canvas { width: 100%; height: 100%; display: block; }
+.c-globe::before { content: ''; position: absolute; inset: 12%; border-radius: 50%; background: radial-gradient(circle, rgba(206, 179, 166, 0.18), transparent 70%); filter: blur(30px); z-index: -1; }
+.c-hint { position: absolute; left: 50%; bottom: 2%; transform: translateX(-50%); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-dim); }
+.c-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.2rem; margin-top: 0.8rem; font-size: 0.85rem; color: var(--c-dim); }
+.c-legend li { display: inline-flex; align-items: center; gap: 0.45rem; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: #e8a87c; box-shadow: 0 0 0 3px rgba(232, 168, 124, 0.2); }
+.dot--home { background: var(--c-text); box-shadow: 0 0 0 3px rgba(236, 232, 221, 0.25); }
+
+.c-foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding: 1.4rem var(--pad) 2rem; border-top: 1px solid var(--c-line); color: var(--c-dim); font-size: 0.9rem; max-width: 1500px; margin: 0 auto; }
+.c-back { color: var(--c-text); }
+.c-back:hover { color: var(--sand); }
+
+@media (max-width: 960px) {
+  .c-main { grid-template-columns: 1fr; padding-top: 6rem; }
+  .c-right { order: 2; }
+  .c-globe { width: min(100%, 420px); }
+}
+@media (max-width: 560px) {
+  .c-top__nav li:not(:last-child) { display: none; }
+  .c-form { grid-template-columns: 1fr; }
+  .c-title { font-size: clamp(2rem, 10vw, 2.6rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .c-wipe { display: none; }
+}
